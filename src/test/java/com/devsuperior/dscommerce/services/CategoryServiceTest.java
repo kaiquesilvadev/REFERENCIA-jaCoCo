@@ -17,6 +17,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.devsuperior.dscommerce.dto.CategoryDTO;
 import com.devsuperior.dscommerce.entities.Category;
 import com.devsuperior.dscommerce.repositories.CategoryRepository;
+import com.devsuperior.dscommerce.factory.CriaCategory;
 
 @ExtendWith(SpringExtension.class)
 public class CategoryServiceTest {
@@ -31,7 +32,7 @@ public class CategoryServiceTest {
 	
 	@BeforeEach
 	public void upSet() throws Exception{
-		category = new Category(2L , "Eletrônicos");
+		category = CriaCategory.categoryComId();
 		list = new ArrayList<>();
 		list.add(category);
 		
