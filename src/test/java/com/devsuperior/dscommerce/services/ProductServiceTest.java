@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mockitoSession;
 
 import java.util.List;
 import java.util.Optional;
@@ -45,9 +46,10 @@ public class ProductServiceTest {
 		existente = 1L;
 		inexistente = 1000L;
 		product = CriaProduct.productComId();
-		ProductDTO dto = new ProductDTO(product);
 		page = new PageImpl<>(List.of(product));
-
+		
+		Mockito.when(repository.getReferenceById(existente)).thenReturn(CriaProduct.productExistent());
+		Mockito.when(repository.save(any())).thenReturn(product);
 		Mockito.when(repository.findById(existente)).thenReturn(Optional.of(product));
 		Mockito.when(repository.findById(inexistente)).thenReturn(Optional.empty());
 		Mockito.when(repository.searchByName(any(), (Pageable) any())).thenReturn(page);
@@ -82,6 +84,29 @@ public class ProductServiceTest {
 		assertNotNull(pageProduct);
 		assertEquals(pageProduct.getSize(), 1L);
 		assertEquals(pageProduct.iterator().next().getName(), "The Lord of the Rings");
+	}
+	
+	@DisplayName("insert deve retorna a entidade depois de salva")
+	@Test
+	public void insertDeveRetornaAEntidadeDepoisDeSalva() {
+		ProductDTO dto = new ProductDTO(CriaProduct.novoProdut());
+		
+		ProductDTO productDTO = service.insert(dto);
+		
+		assertNotNull(productDTO);
+		assertEquals(productDTO.getName(), dto.getName());
+	}
+	
+	@DisplayName("update Deve Retorna A Entidade Quando O Id For Existente")
+	@Test
+	public void updateDeveRetornaAEntidadeQuandoOIdForExistente() {
+		ProductDTO dto = new ProductDTO(CriaProduct.novoProdut());
+		
+		ProductDTO productDTO = service.update(1l , dto);
+		
+		assertNotNull(productDTO);
+		assertEquals(productDTO.getName(), dto.getName());
+		assertEquals(productDTO.getId(), 1l);
 	}
 
 }

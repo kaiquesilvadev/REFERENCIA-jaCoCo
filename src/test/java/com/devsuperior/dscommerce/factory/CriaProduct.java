@@ -15,4 +15,41 @@ public class CriaProduct {
 		product.getCategories().add(CriaCategory.categoryComId());
 		return product;
 	}
+	
+	public static Product novoProdut() {
+		Product product = new Product(
+				null , 
+				"The Lord of the Rings" , 
+				" Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." ,
+				 90.5 , 
+				"https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/1-big.jpg" );
+		
+		product.getCategories().add(CriaCategory.categoryComId());
+		return product;
+	}
+	
+	public static Product productInexistente() {
+		Product product = new Product(
+				1000L , 
+				"The Lord of the Rings" , 
+				" Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." ,
+				 90.5 , 
+				"https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/1-big.jpg" );
+		
+		product.getCategories().add(CriaCategory.categoryComId());
+		return product;
+	}
+	
+	public static Product productExistent() {
+		Product product = new Product(
+				1L , 
+				null , 
+				null ,
+				null , 
+				null );
+		
+		product.getCategories().add(CriaCategory.categoryComId());
+		return product;
+	}
+
 }
