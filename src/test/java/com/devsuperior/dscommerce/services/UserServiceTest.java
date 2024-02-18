@@ -121,4 +121,27 @@ public class UserServiceTest {
 		});
 	}
 
+	@DisplayName("getMe Deve Buscar User Se estiver authenticated")
+	@Test
+	public void getMeDeveBuscarUserSeEstiveAuthenticated() {
+
+		UserService userSky = Mockito.spy(service);
+		Mockito.doReturn(user).when(userSky).authenticated();
+
+		UserDTO userDTO = userSky.getMe();
+		
+		assertNotNull(userDTO);
+	}
+	
+	@DisplayName("getMe Deve Retorna UsernameNotFoundException Se User não estiver Authenticated")
+	@Test
+	public void getMeDeveRetornaUsernameNotFoundExceptionSeUserNaoEstiverAuthenticated() {
+
+		UserService userSky = Mockito.spy(service);
+		Mockito.doThrow(UsernameNotFoundException.class).when(userSky).authenticated();
+
+		assertThrows(UsernameNotFoundException.class,() -> {
+			UserDTO userDTO = userSky.getMe();
+		});
+	}
 }
